@@ -1,3 +1,16 @@
+if (NOT DEFINED TARGET_TOOLCHAIN)
+    SET (TARGET_TOOLCHAIN "aarch64-poky-linux-gcc")
+endif()
+# Yocto build defines CMAKE_TOOLCHAIN_FILE to set the tool chain.
+# We must not override it.
+if (NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    if (DEFINED TARGET_CONFIG_ROOT)
+        SET(CMAKE_TOOLCHAIN_FILE "${TARGET_CONFIG_ROOT}/toolchain.cmake")
+    else ()
+        SET(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/cmake/toolchains/aarch64-poky-linux.cmake")
+    endif()
+endif()
+
 project ("edge-pt-examples" C)
 cmake_minimum_required (VERSION 3.5)
 
